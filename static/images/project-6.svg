@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" fill="none">
+  <defs>
+    <linearGradient id="g6" x1="0" y1="0" x2="400" y2="250">
+      <stop stop-color="#632ca6"/>
+      <stop offset="1" stop-color="#1e1e1f"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="250" fill="url(#g6)"/>
+  <rect x="40" y="40" width="320" height="170" rx="12" fill="#ffffff" opacity=".08"/>
+  <text x="200" y="135" text-anchor="middle" font-family="Poppins,sans-serif" font-size="24" font-weight="600" fill="#ffdb70">Datadog APM</text>
+</svg>
