@@ -2,7 +2,7 @@
 
 Site: [luqmanhakim.dev](https://luqmanhakim.dev)
 
-SvelteKit + Svelte 5 portfolio, deployed to Cloudflare Pages.
+SvelteKit + Svelte 5 portfolio, deployed to Cloudflare Workers.
 
 ## Scripts
 
@@ -12,19 +12,21 @@ npm run dev
 npm run build
 npm run preview
 npm run check
-npm run deploy   # build + wrangler pages deploy (local)
+npm run deploy   # build + wrangler deploy (local)
 ```
 
-## Deploy (GitHub Actions → Cloudflare Pages)
+## Deploy (GitHub Actions → Cloudflare Workers)
 
 Workflow: `.github/workflows/deploy-pages.yml`  
-Builds on push/PR to `main`/`master`, then deploys the **luqmanhakim-dev** Pages project.
+Builds on push/PR to `main`/`master`, then runs `wrangler deploy` for Worker **`luqmanhakim-dev`**.
+
+Default URL: `https://luqmanhakim-dev.<your-subdomain>.workers.dev`
 
 ### 1. Create API token
 
 Cloudflare → **My Profile** → **API Tokens** → **Create Token**:
 
-- Use **Edit Cloudflare Workers** (includes Pages), or custom with Cloudflare Pages Edit
+- Use **Edit Cloudflare Workers**
 
 ### 2. Add GitHub secrets
 
@@ -45,11 +47,10 @@ git push origin main
 
 After the first deploy:
 
-1. Cloudflare dashboard → **Workers & Pages** → **luqmanhakim-dev**
-2. **Custom domains** → **Set up a custom domain** → `luqmanhakim.dev` (and `www` if you want)
-3. If the domain is already on Cloudflare DNS, it will add the right records automatically  
-   If DNS is elsewhere, point:
-   - `luqmanhakim.dev` → CNAME to `luqmanhakim-dev.pages.dev` (or follow the dashboard instructions)
-   - Optional: `www` → CNAME to `luqmanhakim-dev.pages.dev`
+1. Cloudflare → **Workers & Pages** → **luqmanhakim-dev**
+2. **Settings** → **Domains & Routes** (or **Triggers** / **Custom Domains**)
+3. Add `luqmanhakim.dev` (and `www` if you want)
+
+If the domain is on Cloudflare DNS, records are usually configured for you.
 
 Customize content in `src/lib/data/content.ts`.
