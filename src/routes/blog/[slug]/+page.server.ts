@@ -2,9 +2,9 @@ import { error } from '@sveltejs/kit';
 import { fetchDevToArticle } from '$lib/server/devto';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ params, fetch }) => {
+export const load: PageServerLoad = async ({ params }) => {
 	try {
-		const article = await fetchDevToArticle(params.slug, fetch);
+		const article = await fetchDevToArticle(params.slug);
 
 		if (!article) {
 			error(404, 'Post not found');
@@ -13,7 +13,7 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
 		return { article };
 	} catch (err) {
 		if (err && typeof err === 'object' && 'status' in err) throw err;
-		console.error(err);
+		console.error('[blog] failed to load DEV.to article', err);
 		error(502, 'Could not load this post from DEV.to');
 	}
 };

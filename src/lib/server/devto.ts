@@ -22,6 +22,11 @@ export type DevToArticle = Omit<DevToArticleSummary, 'tag_list'> & {
 	tag_list: string[] | string;
 };
 
+const DEVTO_HEADERS: HeadersInit = {
+	Accept: 'application/vnd.forem.api-v1+json',
+	'User-Agent': 'luqmanhakim.dev/1.0 (+https://luqmanhakim.dev; portfolio blog)'
+};
+
 function normalizeTags(tagList: string[] | string | undefined, tags?: string[] | string): string[] {
 	if (Array.isArray(tagList) && tagList.length > 0) {
 		return tagList.map(String);
@@ -42,15 +47,26 @@ function normalizeTags(tagList: string[] | string | undefined, tags?: string[] |
 	return [];
 }
 
-export async function fetchDevToArticles(
-	fetcher: typeof fetch = fetch
-): Promise<DevToArticleSummary[]> {
-	const response = await fetcher(
-		`${DEVTO_API_BASE}/articles?username=${DEVTO_USERNAME}&per_page=30`
+async function devtoFetch(url: string): Promise<Response> {
+	// Use the platform fetch (not SvelteKit's) for third-party APIs on Workers.
+	return fetch(url, {
+		headers: DEVTO_HEADERS,
+		// Cloudflare Workers cache hint (ignored outside Workers)
+		cf: {
+			cacheTtl: 300,
+			cacheEverything: true
+		}
+	} as RequestInit);
+}
+
+export async function fetchDevToArticles(): Promise<DevToArticleSummary[]> {
+	const response = await devtoFetch(
+		`${DEVTO_API_BASE}/articles?username=${encodeURIComponent(DEVTO_USERNAME)}&per_page=30`
 	);
 
 	if (!response.ok) {
-		throw new Error(`Failed to fetch DEV.to articles (${response.status})`);
+		const body = await response.text().catch(() => '');
+		throw new Error(`DEV.to list failed (${response.status}): ${body.slice(0, 200)}`);
 	}
 
 	const articles = (await response.json()) as DevToArticleSummary[];
@@ -61,17 +77,19 @@ export async function fetchDevToArticles(
 }
 
 export async function fetchDevToArticle(
-	slug: string,
-	fetcher: typeof fetch = fetch
+	slug: string
 ): Promise<(DevToArticleSummary & { body_html: string; url: string }) | null> {
-	const response = await fetcher(`${DEVTO_API_BASE}/articles/${DEVTO_USERNAME}/${slug}`);
+	const response = await devtoFetch(
+		`${DEVTO_API_BASE}/articles/${encodeURIComponent(DEVTO_USERNAME)}/${encodeURIComponent(slug)}`
+	);
 
 	if (response.status === 404) {
 		return null;
 	}
 
 	if (!response.ok) {
-		throw new Error(`Failed to fetch DEV.to article (${response.status})`);
+		const body = await response.text().catch(() => '');
+		throw new Error(`DEV.to article failed (${response.status}): ${body.slice(0, 200)}`);
 	}
 
 	const article = (await response.json()) as DevToArticle;
