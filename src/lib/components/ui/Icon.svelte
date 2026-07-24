@@ -19,7 +19,8 @@
 		| 'chevron'
 		| 'quote'
 		| 'paper-plane'
-		| 'close';
+		| 'close'
+		| 'external';
 
 	type Props = {
 		name: IconName;
@@ -167,5 +168,13 @@
 		/>
 	{:else if name === 'close'}
 		<path d="M7 7l10 10M17 7 7 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+	{:else if name === 'external'}
+		<path
+			d="M10 5h9v9M19 5l-9.5 9.5M14 19H6.5A1.5 1.5 0 0 1 5 17.5v-7.5"
+			stroke="currentColor"
+			stroke-width="1.6"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+		/>
 	{/if}
 </svg>

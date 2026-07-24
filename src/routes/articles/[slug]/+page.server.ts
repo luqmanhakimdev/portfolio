@@ -13,7 +13,7 @@ export const load: PageServerLoad = async ({ params }) => {
 		return { article };
 	} catch (err) {
 		if (err && typeof err === 'object' && 'status' in err) throw err;
-		console.error('[blog] failed to load DEV.to article', err);
+		console.error('[articles] failed to load DEV.to article', err);
 		error(502, 'Could not load this post from DEV.to');
 	}
 };

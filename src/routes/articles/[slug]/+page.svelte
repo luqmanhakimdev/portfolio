@@ -6,7 +6,7 @@
 </script>
 
 <article class="post">
-	<a class="back" href="/blog">← Blog</a>
+	<a class="back" href="/articles">← Articles</a>
 
 	<header class="header">
 		<div class="meta">

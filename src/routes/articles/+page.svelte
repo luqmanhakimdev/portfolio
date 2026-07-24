@@ -5,18 +5,18 @@
 	let { data }: { data: PageData } = $props();
 </script>
 
-<article class="blog">
-	<PageHeader title="Blog" />
+<article class="articles">
+	<PageHeader title="Articles" />
 
 	{#if data.error}
 		<p class="status" role="alert">{data.error}</p>
 	{:else if data.articles.length === 0}
-		<p class="status">No published posts yet.</p>
+		<p class="status">No published articles yet.</p>
 	{:else}
 		<ul class="post-list">
 			{#each data.articles as post (post.id)}
 				<li class="post-item">
-					<a href={`/blog/${post.slug}`}>
+					<a href={`/articles/${post.slug}`}>
 						{#if post.tag_list[0]}
 							<span class="tag">{post.tag_list[0]}</span>
 						{/if}

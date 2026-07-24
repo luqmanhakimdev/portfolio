@@ -24,7 +24,7 @@ export type DevToArticle = Omit<DevToArticleSummary, 'tag_list'> & {
 
 const DEVTO_HEADERS: HeadersInit = {
 	Accept: 'application/vnd.forem.api-v1+json',
-	'User-Agent': 'luqmanhakim.dev/1.0 (+https://luqmanhakim.dev; portfolio blog)'
+	'User-Agent': 'luqmanhakim.dev/1.0 (+https://luqmanhakim.dev; portfolio articles)'
 };
 
 function normalizeTags(tagList: string[] | string | undefined, tags?: string[] | string): string[] {

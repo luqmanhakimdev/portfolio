@@ -20,6 +20,7 @@
 					<a href={link.href} target="_blank" rel="noopener noreferrer">
 						<Icon name={link.icon} size={18} />
 						<span>{link.label}</span>
+						<Icon name="external" size={14} class="external-icon" />
 					</a>
 				</li>
 			{/each}
@@ -65,11 +66,20 @@
 		color: var(--text-light-gray);
 		font-size: var(--fs-6);
 		font-weight: var(--fw-400);
-		transition: color var(--transition-1);
+		text-decoration: underline;
+		text-decoration-color: color-mix(in srgb, var(--text-light-gray) 35%, transparent);
+		text-underline-offset: 4px;
+		transition: color var(--transition-1), text-decoration-color var(--transition-1);
+	}
+
+	.about-links a :global(.external-icon) {
+		opacity: 0.7;
+		flex-shrink: 0;
 	}
 
 	.about-links a:hover {
 		color: var(--accent);
+		text-decoration-color: var(--accent);
 	}
 
 	.section-title {

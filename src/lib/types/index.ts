@@ -12,20 +12,6 @@ export type Service = {
 	icon: ServiceIcon;
 };
 
-export type TimelineItem = {
-	id: string;
-	title: string;
-	company?: string;
-	period: string;
-	description?: string;
-	highlights?: string[];
-};
-
-export type Skill = {
-	id: string;
-	name: string;
-};
-
 export type PetProject = {
 	id: string;
 	name: string;
