@@ -2,7 +2,11 @@ import { error } from '@sveltejs/kit';
 import { fetchDevToArticle } from '$lib/server/devto';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ params, setHeaders }) => {
+	setHeaders({
+		'cache-control': 'public, max-age=60, s-maxage=60'
+	});
+
 	try {
 		const article = await fetchDevToArticle(params.slug);
 

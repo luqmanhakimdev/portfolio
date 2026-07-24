@@ -1,7 +1,11 @@
 import { fetchDevToArticles } from '$lib/server/devto';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({ setHeaders }) => {
+	setHeaders({
+		'cache-control': 'public, max-age=60, s-maxage=60'
+	});
+
 	try {
 		const articles = await fetchDevToArticles();
 		return { articles, error: null as string | null };

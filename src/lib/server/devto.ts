@@ -49,14 +49,13 @@ function normalizeTags(tagList: string[] | string | undefined, tags?: string[] |
 
 async function devtoFetch(url: string): Promise<Response> {
 	// Use the platform fetch (not SvelteKit's) for third-party APIs on Workers.
+	// No edge cache on DEV.to responses — new posts should show up on the next visit.
 	return fetch(url, {
-		headers: DEVTO_HEADERS,
-		// Cloudflare Workers cache hint (ignored outside Workers)
-		cf: {
-			cacheTtl: 300,
-			cacheEverything: true
+		headers: {
+			...DEVTO_HEADERS,
+			'Cache-Control': 'no-cache'
 		}
-	} as RequestInit);
+	});
 }
 
 export async function fetchDevToArticles(): Promise<DevToArticleSummary[]> {
