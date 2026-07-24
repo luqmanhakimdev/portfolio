@@ -1,5 +1,9 @@
 # Luqman Hakim — Portfolio
 
+<img width="1028" height="448" alt="image" src="https://github.com/user-attachments/assets/17eb31cb-309c-4477-ba6e-22a949ccc49d" />
+
+
+
 Site: [luqmanhakim.dev](https://luqmanhakim.dev)
 
 SvelteKit + Svelte 5 portfolio, deployed to Cloudflare Workers.
