@@ -60,7 +60,7 @@ async function devtoFetch(url: string): Promise<Response> {
 
 export async function fetchDevToArticles(): Promise<DevToArticleSummary[]> {
 	const response = await devtoFetch(
-		`${DEVTO_API_BASE}/articles?username=${encodeURIComponent(DEVTO_USERNAME)}&per_page=30`
+		`${DEVTO_API_BASE}/articles?username=${encodeURIComponent(DEVTO_USERNAME)}&per_page=30&page=1`
 	);
 
 	if (!response.ok) {
